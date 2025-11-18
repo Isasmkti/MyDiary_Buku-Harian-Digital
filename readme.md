@@ -37,7 +37,7 @@ Artinya:
 
 # 🔒 Standar Penyimpanan Data
 
-Semua data harus disimpan di **localStorage** dengan key sebagai berikut:
+Semua data aplikasi ini disimpan di **localStorage** dengan key sebagai berikut:
 
 | Fitur | Key |
 |------|-----|
