@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyDiary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+
+<body class="bg-white dark:bg-gray-900 min-h-screen">
+
+    <!-- Navbar -->
+    <div id="navbar-container"></div>
+
+    <main class="container mx-auto px-4 py-8 mt-20">
+
+        <!-- Title -->
+        <div class="mb-8" data-aos="zoom-in" data-aos-duration="800">
+            <h1
+                class="text-4xl font-bold bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-700 bg-clip-text text-transparent text-center mb-2">
+                Dasboard
+            </h1>
+            <p class="text-gray-600 dark:text-gray-400 text-center p-2">Selamat Datang Di Buku Harian Digital Anda</p>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+            <!-- NOTES -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-purple-300/20 hover:border-transparent hover:ring-2 hover:ring-purple-500/40 transition"
+                data-aos="fade-up" data-aos-duration="800">
+                <div class="flex items-center">
+                    <div
+                        class="p-3 rounded-lg bg-gradient-to-br from-purple-200 via-fuchsia-200 to-purple-300 dark:from-purple-800 dark:via-fuchsia-800 dark:to-purple-900 mr-4">
+                        <i class="fas fa-sticky-note text-purple-700 dark:text-purple-300 text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Catatan</p>
+                        <p class="text-2xl font-bold text-purple-700 dark:text-purple-300" id="notes-count">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TODO -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-purple-300/20 hover:border-transparent hover:ring-2 hover:ring-purple-500/40 transition"
+                data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                <div class="flex items-center">
+                    <div
+                        class="p-3 rounded-lg bg-gradient-to-br from-purple-200 via-fuchsia-200 to-purple-300 dark:from-purple-800 dark:via-fuchsia-800 dark:to-purple-900 mr-4">
+                        <i class="fas fa-tasks text-purple-700 dark:text-purple-300 text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Tugas</p>
+                        <p class="text-2xl font-bold text-purple-700 dark:text-purple-300" id="todo-count">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MOOD -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-purple-300/20 hover:border-transparent hover:ring-2 hover:ring-purple-500/40 transition"
+                data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                <div class="flex items-center">
+                    <div
+                        class="p-3 rounded-lg bg-gradient-to-br from-purple-200 via-fuchsia-200 to-purple-300 dark:from-purple-800 dark:via-fuchsia-800 dark:to-purple-900 mr-4">
+                        <i class="fas fa-smile text-purple-700 dark:text-purple-300 text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Mood</p>
+                        <p class="text-2xl font-bold text-purple-700 dark:text-purple-300" id="mood-count">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BALANCE -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-purple-300/20 hover:border-transparent hover:ring-2 hover:ring-purple-500/40 transition"
+                data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                <div class="flex items-center">
+                    <div
+                        class="p-3 rounded-lg bg-gradient-to-br from-purple-200 via-fuchsia-200 to-purple-300 dark:from-purple-800 dark:via-fuchsia-800 dark:to-purple-900 mr-4">
+                        <i class="fas fa-wallet text-purple-700 dark:text-purple-300 text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Saldo</p>
+                        <p class="text-2xl font-bold text-purple-700 dark:text-purple-300" id="balance-amount">$0.00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Sections -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+
+            <!-- Recent Notes -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-purple-300/20"
+                data-aos="fade-right" data-aos-duration="800">
+                <div class="flex justify-between items-center mb-4">
+                    <h2
+                        class="text-lg font-semibold bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-700 bg-clip-text text-transparent">
+                        Catatan Terbaru
+                    </h2>
+                    <a href="notes.html" class="text-purple-600 hover:text-purple-700 dark:text-purple-400 text-sm">
+                        Lihat Semua
+                    </a>
+                </div>
+                <div id="recent-notes-list" class="space-y-3">
+                    <p class="text-gray-500 dark:text-gray-400 text-center py-4">Belum ada catatan</p>
+                </div>
+            </div>
+
+            <!-- Upcoming Tasks -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-purple-300/20"
+                data-aos="fade-left" data-aos-duration="800" data-aos-delay="100">
+                <div class="flex justify-between items-center mb-4">
+                    <h2
+                        class="text-lg font-semibold bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-700 bg-clip-text text-transparent">
+                        Tugas Mendatang
+                    </h2>
+                    <a href="todo.html" class="text-purple-600 hover:text-purple-700 dark:text-purple-400 text-sm">
+                        Lihat Semua
+                    </a>
+                </div>
+                <div id="upcoming-tasks-list" class="space-y-3">
+                    <p class="text-gray-500 dark:text-gray-400 text-center py-4">Belum ada tugas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mood Chart -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-purple-300/20 mb-8"
+            data-aos="fade-up" data-aos-duration="800">
+            <h2
+                class="text-lg font-semibold bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-700 bg-clip-text text-transparent mb-4">
+                Ikhtisar Mood Mingguan
+            </h2>
+            <div class="h-64 flex items-end justify-between pt-4" id="mood-chart">
+                <p class="text-gray-500 dark:text-gray-400 text-center w-full py-16">Belum ada data suasana hati</p>
+            </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-purple-300/20 mb-8" data-aos="fade-up" data-aos-duration="800">
+            <div class="flex justify-between items-center mb-4">
+                <h2
+                    class="text-lg font-semibold bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-700 bg-clip-text text-transparent">
+                    Transaksi Terbaru
+                </h2>
+                <a href="finance.html" class="text-purple-600 hover:text-purple-700 dark:text-purple-400 text-sm">
+                    Lihat Semua
+                </a>
+            </div>
+            <div id="recent-transactions-list" class="space-y-3">
+                <p class="text-gray-500 dark:text-gray-400 text-center py-4">Belum ada transaksi</p>
+            </div>
+        </div>
+
+    </main>
+
+   <script>
+fetch('components/navbar.html')
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById('navbar-container').innerHTML = data;
+    });
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const notesData = JSON.parse(localStorage.getItem('notes_data') || '[]');
+    const todoData = JSON.parse(localStorage.getItem('todo_data') || '[]');
+    const moodData = JSON.parse(localStorage.getItem('mood_data') || '[]');
+    const financeData = JSON.parse(localStorage.getItem('finance_data') || '[]');
+
+    document.getElementById('notes-count').textContent = notesData.length;
+    document.getElementById('todo-count').textContent = todoData.length;
+    document.getElementById('mood-count').textContent = moodData.length;
+
+    /* Balance */
+    let balance = 0;
+    financeData.forEach(transaction => {
+        if (transaction.type === 'income') balance += parseFloat(transaction.amount);
+        else if (transaction.type === 'expense') balance -= parseFloat(transaction.amount);
+    });
+
+    document.getElementById('balance-amount').textContent = `$${balance.toFixed(2)}`;
+
+    /* Recent Notes */
+    const recentNotesList = document.getElementById('recent-notes-list');
+
+    if (notesData.length > 0) {
+        recentNotesList.innerHTML = '';
+        const recentNotes = [...notesData]
+            .sort((a, b) => b.created_at - a.created_at)
+            .slice(0, 3);
+
+        recentNotes.forEach(note => {
+            const noteElement = document.createElement('div');
+            noteElement.className = 'p-3 rounded-lg bg-gradient-to-r from-purple-50 via-fuchsia-50 to-purple-100 dark:from-purple-900 dark:via-fuchsia-900 dark:to-purple-800 hover:brightness-110 cursor-pointer transition';
+
+            noteElement.innerHTML = `
+                <h3 class="font-medium text-purple-700 dark:text-purple-300 truncate">${note.title || 'Untitled Note'}</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm truncate">${note.content.substring(0, 50)}${note.content.length > 50 ? '...' : ''}</p>
+            `;
+            recentNotesList.appendChild(noteElement);
+        });
+    }
+
+    /* Upcoming Tasks */
+    const upcomingTasksList = document.getElementById('upcoming-tasks-list');
+
+    if (todoData.length > 0) {
+        upcomingTasksList.innerHTML = '';
+
+        const upcomingTasks = [...todoData].filter(task => !task.completed).slice(0, 3);
+
+        if (upcomingTasks.length > 0) {
+            upcomingTasks.forEach(task => {
+                const taskElement = document.createElement('div');
+                taskElement.className = 'flex items-center p-3 rounded-lg bg-gradient-to-r from-purple-50 via-fuchsia-50 to-purple-100 dark:from-purple-900 dark:via-fuchsia-900 dark:to-purple-800';
+
+                taskElement.innerHTML = `
+                    <div class="flex-1">
+                        <h3 class="font-medium text-purple-700 dark:text-purple-300">${task.title}</h3>
+                        ${task.due_date ? `<p class="text-gray-600 dark:text-gray-400 text-sm">${new Date(task.due_date).toLocaleDateString()}</p>` : ''}
+                    </div>
+                    <div class="w-5 h-5 rounded-full border-2 border-purple-300 dark:border-purple-600"></div>
+                `;
+                upcomingTasksList.appendChild(taskElement);
+            });
+        } else {
+            upcomingTasksList.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center py-4">Tidak ada tugas mendatang</p>';
+        }
+    }
+
+    /* Recent Transactions */
+    const recentTransactionsList = document.getElementById('recent-transactions-list');
+
+    if (financeData.length > 0) {
+        recentTransactionsList.innerHTML = '';
+        const recentTransactions = [...financeData].sort((a, b) => b.date - a.date).slice(0, 3);
+
+        recentTransactions.forEach(transaction => {
+            const isIncome = transaction.type === 'income';
+            const transactionElement = document.createElement('div');
+
+            transactionElement.className = 'flex items-center p-3 rounded-lg bg-gradient-to-r from-purple-50 via-fuchsia-50 to-purple-100 dark:from-purple-900 dark:via-fuchsia-900 dark:to-purple-800';
+
+            transactionElement.innerHTML = `
+                <div class="mr-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-300 via-fuchsia-300 to-purple-400 dark:from-purple-700 dark:via-fuchsia-700 dark:to-purple-800 flex items-center justify-center">
+                        <i class="fas ${isIncome ? 'fa-arrow-down' : 'fa-arrow-up'} text-purple-700 dark:text-purple-300"></i>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-medium text-purple-700 dark:text-purple-300">${transaction.description}</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">${new Date(transaction.date).toLocaleDateString()}</p>
+                </div>
+                <div class="font-medium text-purple-700 dark:text-purple-300">${isIncome ? '+' : '-'}$${parseFloat(transaction.amount).toFixed(2)}</div>
+            `;
+            recentTransactionsList.appendChild(transactionElement);
+        });
+    }
+
+    /* Mood Chart */
+    const moodChart = document.getElementById('mood-chart');
+
+    if (moodData.length > 0) {
+        moodChart.innerHTML = '';
+
+        const today = new Date();
+        const last7Days = [];
+
+        for (let i = 6; i >= 0; i--) {
+            const date = new Date(today);
+            date.setDate(date.getDate() - i);
+            last7Days.push(date.toISOString().split('T')[0]);
+        }
+
+        last7Days.forEach(day => {
+            const dayData = moodData.find(mood => mood.date === day);
+
+            const barContainer = document.createElement('div');
+            barContainer.className = 'flex flex-col items-center flex-1 px-1';
+
+            const bar = document.createElement('div');
+            bar.className = 'w-full flex justify-center mt-2';
+
+            if (dayData) {
+                const barValue = document.createElement('div');
+                barValue.className = 'w-6 rounded-t bg-gradient-to-t from-purple-500 via-fuchsia-500 to-purple-700 hover:scale-105 transition';
+                barValue.style.height = `${dayData.mood * 20}%`;
+                bar.appendChild(barValue);
+            } else {
+                const emptyBar = document.createElement('div');
+                emptyBar.className = 'w-6 bg-purple-100 dark:bg-purple-800 rounded-t';
+                emptyBar.style.height = '5px';
+                bar.appendChild(emptyBar);
+            }
+
+            const dayLabel = document.createElement('div');
+            dayLabel.className = 'text-xs text-gray-500 dark:text-gray-400 mt-2';
+            dayLabel.textContent = new Date(day).toLocaleDateString('en-US', { weekday: 'short' });
+
+            barContainer.appendChild(bar);
+            barContainer.appendChild(dayLabel);
+            moodChart.appendChild(barContainer);
+        });
+    }
+
+});
+</script>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="assets/js/utils.js"></script>
+    <script> AOS.init(); </script>
+
+
+
+
+</body>
+
+</html>

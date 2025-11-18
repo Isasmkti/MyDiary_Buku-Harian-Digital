@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Lato', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <!-- Navbar -->
+    <div id="navbar-container">
+        <!-- Navbar will be loaded here -->
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 mt-20" data-aos="fade-up" data-aos-duration="700">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold  bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-700 bg-clip-text text-transparent dark:text-white mb-2">Mood Tracker</h1>
+            <p class="text-gray-600 dark:text-gray-400">Track mood dan ekspresi harianmu disini</p>
+        </div>
+
+        <!-- Mood Entry -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-100 dark:border-gray-700 mb-8">
+            <h2 class="text-xl font-semibold  bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-700 bg-clip-text text-transparent dark:text-white mb-4">Apa yang kamu rasakan hari ini?</h2>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+                <button class="mood-btn p-4 rounded-lg bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 flex flex-col items-center" data-mood="1">
+                    <i class="fas fa-angry text-2xl text-red-500 mb-2"></i>
+                    <span class="text-red-700 dark:text-red-300">Buruk Sekali</span>
+                </button>
+                <button class="mood-btn p-4 rounded-lg bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/30 flex flex-col items-center" data-mood="2">
+                    <i class="fas fa-frown text-2xl text-orange-500 mb-2"></i>
+                    <span class="text-orange-700 dark:text-orange-300">Buruk</span>
+                </button>
+                <button class="mood-btn p-4 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 hover:bg-yellow-100 dark:hover:bg-yellow-900/30 flex flex-col items-center" data-mood="3">
+                    <i class="fas fa-meh text-2xl text-yellow-500 mb-2"></i>
+                    <span class="text-yellow-700 dark:text-yellow-300">Oke</span>
+                </button>
+                <button class="mood-btn p-4 rounded-lg bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 flex flex-col items-center" data-mood="4">
+                    <i class="fas fa-smile text-2xl text-green-500 mb-2"></i>
+                    <span class="text-green-700 dark:text-green-300">Baik</span>
+                </button>
+                <button class="mood-btn p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 flex flex-col items-center" data-mood="5">
+                    <i class="fas fa-laugh text-2xl text-blue-500 mb-2"></i>
+                    <span class="text-blue-700 dark:text-blue-300">Luar Biasa</span>
+                </button>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 dark:text-gray-300 mb-2">Notes (Optional)</label>
+                <textarea id="mood-notes" placeholder="Apa yang membuatmu merasa begitu?" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"></textarea>
+            </div>
+            <button id="save-mood-btn" class="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg">
+                Simpan Mood
+            </button>
+        </div>
+
+        <!-- Mood Stats -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- Weekly Overview -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-100 dark:border-gray-700">
+                <h2 class="text-xl font-semibold  bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-700 bg-clip-text text-transparent dark:text-white mb-4">Overview Mingguan</h2>
+                <div class="h-64 flex items-end justify-between pt-4" id="weekly-chart">
+                    <p class="text-gray-500 dark:text-gray-400 text-center w-full py-16">Belum ada data mood</p>
+                </div>
+            </div>
+
+            <!-- Mood Distribution -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-100 dark:border-gray-700">
+                <h2 class="text-xl font-semibold  bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-700 bg-clip-text text-transparent dark:text-white mb-4">Pergantian Mood</h2>
+                <div id="mood-distribution" class="space-y-4">
+                    <!-- Distribution will be loaded here -->
+                    <p class="text-gray-500 dark:text-gray-400 text-center py-16">Belum ada data mood</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mood History -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-100 dark:border-gray-700">
+            <h2 class="text-xl font-semibold  bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-700 bg-clip-text text-transparent dark:text-white mb-4">Mood History</h2>
+            <div id="mood-history" class="space-y-3">
+                <!-- History will be loaded here -->
+                <p class="text-gray-500 dark:text-gray-400 text-center py-8">Belum ada data mood</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Load navbar
+        fetch('components/navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+            });
+    </script>
+    <script src="assets/js/mood.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+</html>

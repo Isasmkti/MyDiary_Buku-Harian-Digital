@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keuangan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Lato', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen relative">
+    <!-- Navbar -->
+    <div id="navbar-container">
+        <!-- Navbar will be loaded here -->
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 mt-20" data-aos="fade-up" data-aos-duration="700">
+        <div class="mb-8">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-bold  bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-700 bg-clip-text text-transparent dark:text-white mb-2">Pelacak Keuangan</h1>
+                    <p class="text-gray-600 dark:text-gray-400">Kelola pemasukan dan pengeluaran Anda</p>
+                </div>
+                <button id="add-transaction-btn" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg flex items-center">
+                    <i class="fas fa-plus mr-2"></i> Transaksi Baru
+                </button>
+            </div>
+        </div>
+
+        <!-- Balance Summary -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-100 dark:border-gray-700">
+                <p class="text-gray-500 dark:text-gray-400">Total Saldo</p>
+                <p class="text-3xl font-bold text-gray-800 dark:text-white mt-2" id="total-balance">$0.00</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-100 dark:border-gray-700">
+                <p class="text-gray-500 dark:text-gray-400">Total Pemasukan</p>
+                <p class="text-3xl font-bold text-green-600 dark:text-green-400 mt-2" id="total-income">$0.00</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-100 dark:border-gray-700">
+                <p class="text-gray-500 dark:text-gray-400">Total Pengeluaran</p>
+                <p class="text-3xl font-bold text-red-600 dark:text-red-400 mt-2" id="total-expenses">$0.00</p>
+            </div>
+        </div>
+
+        <!-- Finance Chart -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-100 dark:border-gray-700 mb-8">
+            <h2 class="text-xl font-semibold  bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-700 bg-clip-text text-transparent dark:text-white mb-4">Ringkasan Bulanan</h2>
+            <div class="h-64 flex items-end justify-between pt-4" id="finance-chart">
+                <p class="text-gray-500 dark:text-gray-400 text-center w-full py-16">Belum ada data transaksi</p>
+            </div>
+        </div>
+
+        <!-- Transaction Filters -->
+        <div class="flex flex-wrap gap-2 mb-6">
+            <button class="filter-btn active px-4 py-2 rounded-lg bg-purple-500 text-white" data-filter="all">Semua</button>
+            <button class="filter-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600" data-filter="income">Pemasukan</button>
+            <button class="filter-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600" data-filter="expense">Pengeluaran</button>
+        </div>
+
+        <!-- Transactions List -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-100 dark:border-gray-700">
+            <h2 class="text-xl font-semibold  bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-700 bg-clip-text text-transparent dark:text-white mb-4">Transaksi Terbaru</h2>
+            <div id="transactions-list" class="space-y-3">
+                <!-- Transactions will be loaded here -->
+                <p class="text-gray-500 dark:text-gray-400 text-center py-8">Belum ada transaksi. Tambahkan transaksi pertama Anda!</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Transaction Modal -->
+    <div id="transaction-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg w-full max-w-md">
+            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white" id="modal-title">Tambah Transaksi</h3>
+                <button id="close-modal" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-4">
+                <input type="hidden" id="transaction-id">
+                <div class="mb-4">
+                    <label class="block text-gray-700 dark:text-gray-300 mb-2">Jenis</label>
+                    <div class="flex space-x-4">
+                        <label class="flex items-center">
+                            <input type="radio" name="transaction-type" value="income" class="transaction-type-radio" checked>
+                            <span class="ml-2 text-gray-700 dark:text-gray-300">Pemasukan</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="transaction-type" value="expense" class="transaction-type-radio">
+                            <span class="ml-2 text-gray-700 dark:text-gray-300">Pengeluaran</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 dark:text-gray-300 mb-2">Jumlah</label>
+                    <input type="number" id="transaction-amount" placeholder="0.00" step="0.01" min="0" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 dark:text-gray-300 mb-2">Deskripsi</label>
+                    <input type="text" id="transaction-description" placeholder="Untuk apa ini?" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 dark:text-gray-300 mb-2">Tanggal</label>
+                    <input type="date" id="transaction-date" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                </div>
+            </div>
+            <div class="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end space-x-3">
+                <button id="delete-transaction-btn" class="px-4 py-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg hidden">
+                    Hapus
+                </button>
+                <button id="save-transaction-btn" class="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg">
+                    Simpan Transaksi
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load navbar
+        fetch('components/navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+            });
+    </script>
+    <script src="assets/js/finance.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+</html>
